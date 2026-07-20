@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Plateforme de préservation et valorisation du patrimoine culturel de Ouidah">
     <meta name="theme-color" content="#fbbf24">
+    <meta name="description" content="Ouidah : Patrimoine, Culture & Innovation - Plateforme de préservation du patrimoine culturel">
     <title>Ouidah : Patrimoine, Culture & Innovation</title>
     
     <!-- PWA Manifest -->
-    <link rel="manifest" href="/manifest.json">
-    
-    <!-- Apple Touch Icon -->
-    <link rel="apple-touch-icon" href="/icon-192.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -151,7 +149,6 @@
             header h1 { font-size: 2rem; }
             .projects-grid { grid-template-columns: 1fr; }
         }
-        /* Notification PWA */
         .pwa-notification {
             position: fixed;
             bottom: 20px;
@@ -220,7 +217,7 @@
                 <p><strong>Vision :</strong> Faire de Ouidah une "Smart City" touristique modèle, transparente et moderne.</p>
                 <div class="links-group">
                     <a href="https://cpefpa.github.io/ouidah-connect/" target="_blank" class="btn-small">🌐 Site public</a>
-                    <a href="https://cpefpa.github.io/ouidah-connect/billetterie.html" target="_blank" class="btn-small">️ Billetterie</a>
+                    <a href="https://cpefpa.github.io/ouidah-connect/billetterie.html" target="_blank" class="btn-small">🎟️ Billetterie</a>
                     <a href="https://cpefpa.github.io/ouidah-connect/controle.html" target="_blank" class="btn-small">👮 App Contrôle</a>
                     <a href="https://cpefpa.github.io/ouidah-connect/admin.html" target="_blank" class="btn-small">🔐 Admin</a>
                     <a href="https://cpefpa.github.io/ouidah-rapport-mairie/" target="_blank" class="btn-small">📊 Dashboard</a>
@@ -229,24 +226,21 @@
         </div>
     </div>
 
-    <!-- Notification PWA -->
     <div class="pwa-notification" id="pwaNotification">
         📱 Installez l'application Ouidah Connect !
         <button onclick="installPWA()">Installer</button>
-        <button onclick="closeNotification()" style="background:transparent; color:#0f172a; margin-left:5px;"></button>
+        <button onclick="closeNotification()" style="background:transparent; color:#0f172a; margin-left:5px;">✕</button>
     </div>
 
     <script>
-        // Enregistrement du Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
+                navigator.serviceWorker.register('sw.js')
                     .then(reg => console.log('Service Worker enregistré', reg))
                     .catch(err => console.log('Erreur Service Worker', err));
             });
         }
 
-        // Gestion de l'installation PWA
         let deferredPrompt;
         const pwaNotification = document.getElementById('pwaNotification');
 
