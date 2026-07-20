@@ -4,62 +4,172 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#fbbf24">
+    <meta name="description" content="Ouidah : Patrimoine, Culture & Innovation">
     <title>Ouidah : Patrimoine, Culture & Innovation</title>
+    
+    <!-- PWA -->
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon-192.png">
+
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; color: #ffffff; overflow-x: hidden; }
-        #bg-video { position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; z-index: -2; object-fit: cover; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); z-index: -1; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-        header { text-align: center; margin-bottom: 50px; }
-        header h1 { font-size: 2.5rem; margin-bottom: 15px; color: #fbbf24; }
-        header p { font-size: 1.1rem; color: #cbd5e1; max-width: 800px; margin: 0 auto; }
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .card { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 30px; transition: transform 0.3s; }
-        .card:hover { transform: translateY(-5px); border-color: #fbbf24; }
-        .card h2 { font-size: 1.3rem; margin-bottom: 15px; color: #fbbf24; }
-        .card p { font-size: 0.95rem; line-height: 1.6; color: #e2e8f0; margin-bottom: 12px; }
-        .btn { display: inline-block; margin-top: 15px; padding: 12px 24px; background: #f59e0b; color: #0f172a; text-decoration: none; font-weight: bold; border-radius: 8px; transition: 0.3s; }
-        .btn:hover { background: #fbbf24; }
-        .links-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
-        .btn-small { padding: 8px 14px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff; text-decoration: none; font-size: 0.85rem; border-radius: 6px; }
-        .btn-small:hover { background: #fbbf24; color: #0f172a; border-color: #fbbf24; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        #bg-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -2;
+            object-fit: cover;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.85); /* Assombrit la vidéo pour bien lire le texte */
+            z-index: -1;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #fbbf24;
+        }
+        header p {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #fbbf24;
+        }
+        .card h2 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #fbbf24;
+        }
+        .card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #e2e8f0;
+            margin-bottom: 12px;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 24px;
+            background: #f59e0b;
+            color: #0f172a;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: #fbbf24;
+        }
+        .links-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .btn-small {
+            padding: 8px 14px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+        .btn-small:hover {
+            background: #fbbf24;
+            color: #0f172a;
+            border-color: #fbbf24;
+        }
+        @media (max-width: 768px) {
+            header h1 { font-size: 2rem; }
+        }
     </style>
 </head>
 <body>
+
+    <!-- VIDÉO D'ARRIÈRE-PLAN -->
+    <!-- Astuce : Si vous avez votre propre vidéo, placez-la dans le dossier et remplacez le lien ci-dessous par son nom (ex: src="mavideo.mp4") -->
     <video autoplay muted loop playsinline id="bg-video">
-        <source src="background.mp4" type="video/mp4">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-golden-particles-on-a-black-background-28526-large.mp4" type="video/mp4">
     </video>
+    
     <div class="overlay"></div>
+
     <div class="container">
         <header>
             <h1>Ouidah : Patrimoine, Culture & Innovation</h1>
             <p>Préserver, numériser et valoriser le patrimoine immatériel et la gestion culturelle pour un développement territorial durable.</p>
         </header>
+
         <div class="projects-grid">
+            <!-- Projet 1 -->
             <div class="card">
                 <h2>1. Patrimoine Immatériel de Ouidah</h2>
-                <p><strong>Problème :</strong> Transmission uniquement orale et absence de valorisation économique.</p>
-                <p><strong>Mission :</strong> Préserver, numériser et monétiser ce patrimoine via une plateforme endogène.</p>
+                <p><strong>Problème :</strong> Le patrimoine (rythmes, chants, archives) est menacé par une transmission uniquement orale et l'absence de canal de valorisation économique.</p>
+                <p><strong>Mission :</strong> Préserver, numériser et monétiser ce patrimoine grâce à une plateforme numérique endogène et accessible.</p>
                 <a href="https://cpefpa.github.io/AfriPartition-Benin-Plateforme-de-Patrimoine-Musical/" target="_blank" class="btn">Découvrir AfriPartition</a>
             </div>
+
+            <!-- Projet 2 -->
             <div class="card">
                 <h2>2. Traçabilité de la Diffusion Culturelle</h2>
-                <p><strong>Problème :</strong> Données éparpillées (papier, fichiers isolés), impact non mesurable.</p>
-                <p><strong>Vision :</strong> Digitaliser et centraliser la diffusion pour la rendre mesurable et transparente.</p>
+                <p><strong>Problème :</strong> La diffusion culturelle manque cruellement de traçabilité. Les données sont éparpillées (papier, fichiers isolés).</p>
+                <p><strong>Vision :</strong> Digitaliser et centraliser la diffusion culturelle pour la rendre mesurable, transparente et valorisée.</p>
                 <a href="https://cpefpa.github.io/cres-media-monitor/" target="_blank" class="btn">Explorer CRES Media Monitor</a>
             </div>
+
+            <!-- Projet 3 -->
             <div class="card">
                 <h2>3. Gestion Digitale des Festivals (SIG-JAZZ)</h2>
-                <p><strong>Problème :</strong> Gestion manuelle, files d'attente, fraude aux billets.</p>
-                <p><strong>Vision :</strong> Faire de SIG-JAZZ la plateforme 100% digitale de référence.</p>
+                <p><strong>Problème :</strong> Les festivals en Afrique perdent temps et argent à cause de la gestion manuelle : files d'attente, fraude aux billets.</p>
+                <p><strong>Vision :</strong> Faire de SIG-JAZZ la plateforme de référence 100% digitale pour la gestion des événements culturels.</p>
                 <a href="https://cpefpa.github.io/SIG-Jazz-Ouidah-2026/" target="_blank" class="btn">Voir SIG-JAZZ 2026</a>
             </div>
+
+            <!-- Projet 4 -->
             <div class="card">
                 <h2>4. Ouidah Smart City Touristique</h2>
-                <p><strong>Problème :</strong> Fuites de recettes, absence de données temps réel pour la Mairie.</p>
+                <p><strong>Problème :</strong> La gestion manuelle des entrées entraîne des fuites de recettes, une absence de données fiables en temps réel.</p>
                 <p><strong>Vision :</strong> Faire de Ouidah une "Smart City" touristique modèle, transparente et moderne.</p>
                 <div class="links-group">
                     <a href="https://cpefpa.github.io/ouidah-connect/" target="_blank" class="btn-small">🌐 Site public</a>
@@ -71,7 +181,9 @@
             </div>
         </div>
     </div>
+
     <script>
+        // Enregistrement basique du Service Worker pour la PWA
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').catch(err => console.log('SW Error', err));
         }
