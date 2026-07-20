@@ -1,0 +1,283 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Plateforme de préservation et valorisation du patrimoine culturel de Ouidah">
+    <meta name="theme-color" content="#fbbf24">
+    <title>Ouidah : Patrimoine, Culture & Innovation</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="/icon-192.png">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        #bg-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -2;
+            object-fit: cover;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.75);
+            z-index: -1;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease-out;
+        }
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        header p {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 1s ease-out backwards;
+        }
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(251, 191, 36, 0.4);
+        }
+        .card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #fbbf24;
+        }
+        .card p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #e2e8f0;
+            margin-bottom: 12px;
+        }
+        .card strong {
+            color: #ffffff;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #0f172a;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .btn:hover {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+        .links-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .btn-small {
+            display: inline-block;
+            padding: 8px 14px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        .btn-small:hover {
+            background: #fbbf24;
+            color: #0f172a;
+            border-color: #fbbf24;
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 768px) {
+            header h1 { font-size: 2rem; }
+            .projects-grid { grid-template-columns: 1fr; }
+        }
+        /* Notification PWA */
+        .pwa-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fbbf24;
+            color: #0f172a;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            text-align: center;
+        }
+        .pwa-notification button {
+            margin-left: 10px;
+            padding: 5px 15px;
+            background: #0f172a;
+            color: #fbbf24;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-african-man-playing-a-djembe-drum-in-a-village-4355-large.mp4" type="video/mp4">
+    </video>
+    
+    <div class="overlay"></div>
+
+    <div class="container">
+        <header>
+            <h1>Ouidah : Patrimoine, Culture & Innovation</h1>
+            <p>Préserver, numériser et valoriser le patrimoine immatériel et la gestion culturelle pour un développement territorial durable.</p>
+        </header>
+
+        <div class="projects-grid">
+            <div class="card">
+                <h2>1. Patrimoine Immatériel de Ouidah</h2>
+                <p><strong>Problème :</strong> Le patrimoine (rythmes, chants, archives) est menacé par une transmission uniquement orale et l'absence de canal de valorisation économique.</p>
+                <p><strong>Mission :</strong> Préserver, numériser et monétiser ce patrimoine grâce à une plateforme numérique endogène et accessible.</p>
+                <a href="https://cpefpa.github.io/AfriPartition-Benin-Plateforme-de-Patrimoine-Musical/" target="_blank" class="btn">Découvrir AfriPartition</a>
+            </div>
+
+            <div class="card">
+                <h2>2. Traçabilité de la Diffusion Culturelle</h2>
+                <p><strong>Problème :</strong> La diffusion culturelle manque cruellement de traçabilité. Les données sont éparpillées (papier, fichiers isolés).</p>
+                <p><strong>Vision :</strong> Digitaliser et centraliser la diffusion culturelle pour la rendre mesurable, transparente et valorisée.</p>
+                <a href="https://cpefpa.github.io/cres-media-monitor/" target="_blank" class="btn">Explorer CRES Media Monitor</a>
+            </div>
+
+            <div class="card">
+                <h2>3. Gestion Digitale des Festivals (SIG-JAZZ)</h2>
+                <p><strong>Problème :</strong> Les festivals en Afrique perdent temps et argent à cause de la gestion manuelle : files d'attente, fraude aux billets.</p>
+                <p><strong>Vision :</strong> Faire de SIG-JAZZ la plateforme de référence 100% digitale pour la gestion des événements culturels.</p>
+                <a href="https://cpefpa.github.io/SIG-Jazz-Ouidah-2026/" target="_blank" class="btn">Voir SIG-JAZZ 2026</a>
+            </div>
+
+            <div class="card">
+                <h2>4. Ouidah Smart City Touristique</h2>
+                <p><strong>Problème :</strong> La gestion manuelle des entrées entraîne des fuites de recettes, une absence de données fiables en temps réel.</p>
+                <p><strong>Vision :</strong> Faire de Ouidah une "Smart City" touristique modèle, transparente et moderne.</p>
+                <div class="links-group">
+                    <a href="https://cpefpa.github.io/ouidah-connect/" target="_blank" class="btn-small">🌐 Site public</a>
+                    <a href="https://cpefpa.github.io/ouidah-connect/billetterie.html" target="_blank" class="btn-small">️ Billetterie</a>
+                    <a href="https://cpefpa.github.io/ouidah-connect/controle.html" target="_blank" class="btn-small">👮 App Contrôle</a>
+                    <a href="https://cpefpa.github.io/ouidah-connect/admin.html" target="_blank" class="btn-small">🔐 Admin</a>
+                    <a href="https://cpefpa.github.io/ouidah-rapport-mairie/" target="_blank" class="btn-small">📊 Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification PWA -->
+    <div class="pwa-notification" id="pwaNotification">
+        📱 Installez l'application Ouidah Connect !
+        <button onclick="installPWA()">Installer</button>
+        <button onclick="closeNotification()" style="background:transparent; color:#0f172a; margin-left:5px;"></button>
+    </div>
+
+    <script>
+        // Enregistrement du Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('Service Worker enregistré', reg))
+                    .catch(err => console.log('Erreur Service Worker', err));
+            });
+        }
+
+        // Gestion de l'installation PWA
+        let deferredPrompt;
+        const pwaNotification = document.getElementById('pwaNotification');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            pwaNotification.style.display = 'block';
+        });
+
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('Utilisateur a accepté l\'installation');
+                    }
+                    deferredPrompt = null;
+                    pwaNotification.style.display = 'none';
+                });
+            }
+        }
+
+        function closeNotification() {
+            pwaNotification.style.display = 'none';
+        }
+
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA installée avec succès');
+            pwaNotification.style.display = 'none';
+        });
+    </script>
+
+</body>
+</html>
